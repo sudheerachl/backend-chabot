@@ -1,5 +1,5 @@
 Flask==2.3.2
 pandas==2.1.1
-numpy==1.25.3
+numpy==1.24.2
 tensorflow==2.13.0
 langdetect==1.0.9
