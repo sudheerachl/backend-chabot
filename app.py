@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 import pandas as pd
 import numpy as np
 import random
@@ -8,12 +9,16 @@ import pickle
 
 app = Flask(__name__)
 
+# Configure CORS
+CORS(app, resources={r"/get_response": {"origins": ["https://your-frontend-domain"]}})
+
 # Load dataset
 # Update file paths
 df = pd.read_csv('final_poems_dataset.csv')
 words = pickle.load(open('telugu_words.pkl', 'rb'))
 classes = pickle.load(open('telugu_classes.pkl', 'rb'))
 model = load_model('telugu_chatbotmodel.h5')
+
 
 # Helper functions
 def get_random_poem():
@@ -73,8 +78,17 @@ def predict_class(sentence):
     return [{'intent': classes[r[0]], 'probability': str(r[1])} for r in results]
 
 # Flask routes
-@app.route('/get_response', methods=['POST'])
+@app.route('/get_response', methods=['POST', 'OPTIONS'])
 def get_response():
+    if request.method == 'OPTIONS':
+        headers = {
+            'Access-Control-Allow-Origin': 'https://your-frontend-domain',
+            'Access-Control-Allow-Methods': 'POST',
+            'Access-Control-Allow-Headers': 'Content-Type',
+            'Access-Control-Max-Age': '86400'
+        }
+        return '', 200, headers
+
     data = request.json
     message = data['message']
     lang = detect(message)
