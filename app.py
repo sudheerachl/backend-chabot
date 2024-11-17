@@ -9,12 +9,11 @@ import pickle
 app = Flask(__name__)
 
 # Load dataset
-df = pd.read_csv('/kaggle/input/translated/final_poems_dataset.csv')  # Replace with your dataset path
-
-# Load chatbot models and data
-words = pickle.load(open('/kaggle/input/chatbot/keras/default/1/telugu_words.pkl', 'rb'))
-classes = pickle.load(open('/kaggle/input/chatbot/keras/default/1/telugu_classes.pkl', 'rb'))
-model = load_model('/kaggle/input/chatbot/keras/default/1/telugu_chatbotmodel.h5')
+# Update file paths
+df = pd.read_csv('final_poems_dataset.csv')
+words = pickle.load(open('telugu_words.pkl', 'rb'))
+classes = pickle.load(open('telugu_classes.pkl', 'rb'))
+model = load_model('telugu_chatbotmodel.h5')
 
 # Helper functions
 def get_random_poem():
