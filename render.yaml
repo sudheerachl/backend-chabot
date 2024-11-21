@@ -5,6 +5,4 @@ services:
     plan: free
     buildCommand: pip install -r requirements.txt
     startCommand: gunicorn app:app
-    envVars:
-      - key: PORT
-        value: 5000
+    
