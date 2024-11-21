@@ -19,7 +19,6 @@ words = pickle.load(open('telugu_words.pkl', 'rb'))
 classes = pickle.load(open('telugu_classes.pkl', 'rb'))
 model = load_model('telugu_chatbotmodel.h5')
 
-
 # Helper functions
 def get_random_poem():
     row = df.sample().iloc[0]
@@ -76,6 +75,11 @@ def predict_class(sentence):
     results = [[i, r] for i, r in enumerate(res) if r > ERROR_THRESHOLD]
     results.sort(key=lambda x: x[1], reverse=True)
     return [{'intent': classes[r[0]], 'probability': str(r[1])} for r in results]
+
+# Root route to test server
+@app.route('/')
+def home():
+    return "Welcome to the Telugu Chatbot API!"
 
 # Flask routes
 @app.route('/get_response', methods=['POST', 'OPTIONS'])
