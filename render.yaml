@@ -1,11 +1,10 @@
 services:
   - type: web
-    name: flask-chatbot
+    name: telugu-chatbot-api
     env: python
+    plan: free
     buildCommand: pip install -r requirements.txt
     startCommand: gunicorn app:app
     envVars:
-      - key: FLASK_ENV
-        value: production
-    plan: free
-    pythonVersion: "3.10"  # Specify the version
+      - key: PORT
+        value: 5000
